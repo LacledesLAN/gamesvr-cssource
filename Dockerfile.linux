@@ -1,0 +1,28 @@
+FROM lacledeslan/gamesvr-srcds:linux
+
+MAINTAINER Laclede's LAN <contact@lacledeslan.com>
+
+ENV IMAGE="gamesvr-srcds-cssource:linux"
+
+WORKDIR /app/bin/
+
+# Install Counter-Strike: Source
+RUN useradd \
+		--shell /bin/bash \
+		CSSOURCE &&\
+	# Create output directory &&\
+		mkdir /app/bin --parents &&\
+	# Download &&\
+		/app/steamcmd/steamcmd.sh \
+			+login anonymous \
+			+force_install_dir /app/bin/ \
+			+app_update 232330 validate \
+			+quit &&\
+	# Set permissions &&\
+		chown -R CSSOURCE /app/bin
+	
+COPY ./dist/ /app/bin/
+
+USER CSSOURCE
+
+CMD ["/bin/bash"]
