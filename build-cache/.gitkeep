@@ -1,0 +1,1 @@
+This folder can be used for caching counter-strike source prior to docker build - use steamcmd to install game data into this directory.
