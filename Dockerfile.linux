@@ -6,26 +6,30 @@ ENV IMAGE="gamesvr-srcds-cssource:linux"
 
 HEALTHCHECK NONE
 
+# Set up user
+RUN useradd `
+		--home /app/bin `
+		--gid srcds `
+		--shell /bin/bash `
+		--system `
+		CSSOUCE &&`
+	chown -R CSSOUCE:srcds /app/bin
+
+USER CSSOUCE
+
 # Copy files (if any) from the build-cache
 COPY ./build-cache/ /app/bin/
 
-# Install Counter-Strike: Source
-RUN useradd \
-		--shell /bin/bash \
-		CSSOURCE &&\
-	# Create output directory &&\
-		mkdir /app/bin --parents &&\
-	# Download &&\
-		/app/steamcmd/steamcmd.sh \
-			+login anonymous \
-			+force_install_dir /app/bin/ \
-			+app_update 232330 validate \
-			+quit &&\
-	# Set permissions &&\
-		chown -R CSSOURCE /app/bin
-
-USER CSSOURCE
+# Install CS:GO
+RUN echo "Downloading CS:Source via SteamCMD" &&`
+		/app/steamcmd/steamcmd.sh `
+			+login anonymous `
+			+force_install_dir /app/bin/ `
+			+app_update 232330 validate `
+			+quit
 
 WORKDIR /app/bin/
 
 CMD ["/bin/bash"]
+
+ONBUILD USER root
