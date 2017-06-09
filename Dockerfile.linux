@@ -1,3 +1,5 @@
+# escape=`
+
 FROM lacledeslan/gamesvr-srcds:linux
 
 LABEL maintainer "Laclede's LAN <contact@lacledeslan.com>"
