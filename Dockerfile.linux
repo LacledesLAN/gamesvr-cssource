@@ -1,37 +1,57 @@
 # escape=`
 
-FROM lacledeslan/gamesvr-srcds:linux
+FROM lacledeslan/steamcmd:linux as steamcmd-builder
 
-LABEL maintainer "Laclede's LAN <contact@lacledeslan.com>"
+# Copy cached build files (if any)
+COPY ./build-cache/ /app/output
 
-ENV IMAGE="gamesvr-srcds-cssource:linux"
+# Install Counter-Strike: Source
+RUN echo $'\n\nDownloading Counter-Strike: Source via SteamCMD' &&`
+        /app/steamcmd.sh `
+            +login anonymous `
+            +force_install_dir /app/output `
+            +app_update 232330  validate `
+            +quit;
+
+#=======================================================================
+FROM i386/debian:stretch-slim
+
+ARG VCS_REF
 
 HEALTHCHECK NONE
 
-# Set up user
-RUN useradd `
-		--home /app/bin `
-		--gid srcds `
-		--shell /bin/bash `
-		--system `
-		CSSOUCE &&`
-	chown -R CSSOUCE:srcds /app/bin
+# Install dependencies
+RUN apt-get update && apt-get install -y `
+        libcurl3-gnutls libstdc++6 libncurses5 libz1 &&`
+    apt-get clean &&`
+    rm -rf /var/lib/apt/lists/*;
 
-USER CSSOUCE
+LABEL MAINTAINER="Laclede's LAN <contact@lacledeslan.com>" `
+      org.label-schema.url="https://github.com/LacledesLAN" `
+      org.label-schema.vendor="Laclede's LAN" `
+      org.label-schema.vcs-ref=$VCS_REF `
+      org.label-schema.name="gamesvr-cssource" `
+      org.label-schema.description="Counter-Strike Source in Docker" `
+      org.label-schema.vcs-url="https://github.com/LacledesLAN/gamesvr-cssource"
 
-# Copy files (if any) from the build-cache
-COPY ./build-cache/ /app/bin/
+#Add user "CSSource" (to user group "srcds")
+RUN groupadd --system srcds &&`
+    mkdir --parents /app/.steam/sdk32 &&`
+        chgrp srcds /app &&`
+    useradd `
+        --home /app `
+        --gid srcds `
+        --system `
+        CSSource &&`
+    chown -R CSSource:srcds /app;
 
-# Install CS:GO
-RUN echo "Downloading CS:Source via SteamCMD" &&`
-		/app/steamcmd/steamcmd.sh `
-			+login anonymous `
-			+force_install_dir /app/bin/ `
-			+app_update 232330 validate `
-			+quit
+USER CSSource
 
-WORKDIR /app/bin/
+RUN ln -s /app/bin/steamclient.so /app/.steam/sdk32/steamclient.so
 
-CMD ["/bin/bash"]
+# Copy in from SteamCMD Builder
+COPY --from=steamcmd-builder /app/output /app
+
+WORKDIR /app
 
 ONBUILD USER root
