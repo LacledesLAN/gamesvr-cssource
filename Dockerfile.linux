@@ -3,13 +3,13 @@
 FROM lacledeslan/steamcmd:linux as steamcmd-builder
 
 # Copy cached build files (if any)
-COPY ./build-cache/ /app/output
+COPY ./build-cache/ /output
 
 # Install Counter-Strike: Source
 RUN echo $'\n\nDownloading Counter-Strike: Source via SteamCMD' &&`
         /app/steamcmd.sh `
             +login anonymous `
-            +force_install_dir /app/output `
+            +force_install_dir /output `
             +app_update 232330  validate `
             +quit;
 
@@ -50,7 +50,7 @@ USER CSSource
 RUN ln -s /app/bin/steamclient.so /app/.steam/sdk32/steamclient.so
 
 # Copy in from SteamCMD Builder
-COPY --from=steamcmd-builder /app/output /app
+COPY --from=steamcmd-builder /output /app
 
 WORKDIR /app
 
