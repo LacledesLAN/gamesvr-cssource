@@ -1,5 +1,7 @@
-/.dockerignore eol=lf
-/Dockerfile.linux eol=lf
-/Dockerfile.windows eol=crlf
-/LICENSE eol=lf
-/README.md eol=lf
+./linux/.dockerignore eol=lf
+./linux/Dockerfile eol=lf
+./linux/*.yml eol=lf
+LICENSE eol=lf
+*.bats eol=lf
+*.md eol=lf
+*.sh eol=lf
