@@ -1,0 +1,27 @@
+linux/build-cache/**
+!linux/build-cache/[Rr]eadme.md
+
+#### macOS Junk
+._*
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.com.apple.timemachine.donotpresent
+.DocumentRevisions-V100
+.DS_Store
+.fseventsd
+.LSOverride
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+#### Windows Junk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.msm
+*.msp
+*.lnk
