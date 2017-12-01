@@ -2,7 +2,7 @@
 FROM lacledeslan/steamcmd:linux as cssource-builder
 
 #=======================================================================
-FROM debian:stretch-slim
+FROM debian:stable-slim
 
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
