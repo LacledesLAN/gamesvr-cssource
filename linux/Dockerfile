@@ -39,12 +39,11 @@ COPY --from=cssource-builder /app /app/steamcmd
 
 # Copy files in from builder (if any)
 COPY --from=cssource-builder /output /app
+# Ownership shim until [github.com/moby/moby/pull/34263] makes it into Docker Cloud
+RUN chown -R CSSource:root /app;
 
 ## Add in tests
 COPY ./ll-tests /app/ll-tests
-
-# Ownership shim until [github.com/moby/moby/pull/34263] makes it into Docker Cloud
-RUN chown -R CSSource:root /app;
 
 RUN chmod +rx /app/ll-tests/*.sh &&`
     chmod +rwx /app/ll-tests &&`
