@@ -37,11 +37,12 @@ COPY ./build-cache /app
 #Pull in SteamCMD
 COPY --from=cssource-builder /app /app/steamcmd
 
+# Copy files in from builder (if any)
+COPY --from=cssource-builder /output /app
+
 ## Add in tests
 COPY ./ll-tests /app/ll-tests
 
-# Copy files in from builder (if any)
-COPY --from=cssource-builder /output /app
 # Ownership shim until [github.com/moby/moby/pull/34263] makes it into Docker Cloud
 RUN chown -R CSSource:root /app;
 
