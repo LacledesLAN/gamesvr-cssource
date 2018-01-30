@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+script:
+  - docker build --no-cache --tag lacledeslan/gamesvr-cssource ./linux
+
+after_script:
+  - docker images
