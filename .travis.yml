@@ -1,9 +1,14 @@
 sudo: required
+
+os:
+  - linux
+
 services:
   - docker
 
 script:
-  - docker build --no-cache --tag lacledeslan/gamesvr-cssource ./linux
+  - docker version
+  - docker build --no-cache --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI ./linux
 
 after_script:
   - docker images
