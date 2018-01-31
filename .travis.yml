@@ -14,6 +14,4 @@ services:
 script:
   - docker version
   - docker build --no-cache --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI ./linux
-
-after_script:
   - docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.s
