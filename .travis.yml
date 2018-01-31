@@ -8,10 +8,13 @@ addons:
     packages:
       - docker-ce
 
+git:
+  depth: 4
+
 services:
   - docker
 
 script:
   - docker version
   - docker build --no-cache --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI ./linux
-  - docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.s
+  - docker run --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.s
