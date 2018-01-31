@@ -3,6 +3,11 @@ sudo: required
 os:
   - linux
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 services:
   - docker
 
