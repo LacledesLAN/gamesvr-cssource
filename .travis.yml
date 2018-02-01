@@ -18,7 +18,6 @@ script:
   - docker version
   - docker build --no-cache --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI ./linux
   - docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
-  - docker login -u "$DOCKERHUB_USER" -p "$DOCKERHUB_PASS";
 
 notifications:
   slack:
