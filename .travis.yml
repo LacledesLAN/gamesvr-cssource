@@ -22,8 +22,9 @@ script:
 after_success: |
   echo "TRAVIS_BRANCH=$TRAVIS_BRANCH TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
     if [[ ($TRAVIS_BRANCH == master) && ($TRAVIS_PULL_REQUEST == false) ]] ; then
-      sudo chmod +x ./.travis/trigger-travis.sh
       sh ./.travis/trigger-travis.sh LacledesLAN gamesvr-cssource-freeplay $TRAVIS_ACCESS_TOKEN
+      docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      docker push lacledeslan/gamesvr-cssource
     fi
 
 notifications:
