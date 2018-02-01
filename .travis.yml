@@ -18,17 +18,8 @@ script:
   - docker version
   - docker build --no-cache --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI ./linux
   - docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 
 notifications:
   slack:
     secure: KO9HN7W12dM1ltoeXRq9+8/wpB4qSEILdGz/D9YvaPL9sZIzolwTcNTh8AY7B0hNHolxO3PtWO8QYGnuwWYHM/bhvGyScHRLh2DKX6vAx2Jc0DFkdM99vZM1GvH262r3+jEPCfrUwydkXhkDAt0s5trH8on1pjmfFs8R/Jvwcgeu4n78twCApYhLy3zNj0bBtwj3UbLELkl92aU9yKe0UlzCUtp8Vh8gEvAhbOFI3osJmFWUfb/D6Q6uFLDWvUgPS/QbzdrawNJqsFgNQqFp/SHDJUV3WkaKkIPCPwkqNLn6wzfCxRX3XNip+fDkUcq26/n0mkuD+PNxqfJsWXe9Zr1MW7+Uu2t8Bjph/QPq1pdlyIYuWKNyHLcRtHl+ax7x7lAkAeoFNkqNKXScRBX0zZw74i8Bm1VIVsGE4u5K7dmCHz9vq8ECdWXqfzcNHOZAQunR4Aw7GI0kbTPrLPgnjxbYkkqT1eJKhls8mFYiJhai7/u7OTocJxSgU7VCff1qsobmqtqWwy7Dnhjy2zuWCn2Xrvx2AWb1Zxh/VvMXLaMlu412PC1Oe16j7M4v+dh1dPk+XeB5kCYRZo2rGafpitHI9okmHLAVvtDHTHhb3q0iLi/FSeSNCBpxvEUp8AZOr5oxUHc+mnxQhKwQMdwFXAWWtp329bZzminS3rBEy2Y=
-
-before_deploy:
-  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
-deploy:
-  provider: script
-  script: docker push myorg/myimage
-  on:
-    branch: master
-after_deploy:
-  script: sh ./.travis/trigger-travis.sh LacledesLAN gamesvr-cssource-freeplay $TRAVIS_ACCESS_TOKEN
