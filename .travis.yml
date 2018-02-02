@@ -32,3 +32,4 @@ deploy:
     branch: master
 after_deploy:
  - sh ./.travis/trigger-travis.sh LacledesLAN gamesvr-cssource-freeplay $TRAVIS_ACCESS_TOKEN
+ - echo "here"
