@@ -31,5 +31,6 @@ deploy:
   on:
     branch: master
 after_deploy:
+ - curl -X POST https://hooks.microbadger.com/images/lacledeslan/gamesvr-cssource/$MICROBADGER_TOKEN
  - sh ./.travis/trigger-travis.sh LacledesLAN gamesvr-cssource-freeplay $TRAVIS_ACCESS_TOKEN
- - echo "here"
+
