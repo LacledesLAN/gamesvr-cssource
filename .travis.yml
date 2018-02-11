@@ -1,23 +1,22 @@
 sudo: required
-
-os:
-  - linux
-
+os: linux
+language: minimal
 addons:
   apt:
     packages:
-      - docker-ce
-
+    - docker-ce
 git:
   depth: 4
-
 services:
   - docker
 
+before_install:
+  - docker pull debian:stable-slim
+
 script:
   - docker version
-  - docker build --no-cache --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI ./linux
-  - docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
+  - docker build --no-cache --tag lltest/gamesvr-cssource --tag lacledeslan/gamesvr-cssource --build-arg BUILDNODE=TravisCI --build-arg SOURCE_COMMIT="$TRAVIS_COMMIT" ./linux
+  - docker run -it --rm lltest/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
 
 notifications:
   slack:
@@ -33,4 +32,3 @@ deploy:
 after_deploy:
  - curl -X POST https://hooks.microbadger.com/images/lacledeslan/gamesvr-cssource/$MICROBADGER_TOKEN
  - sh ./.travis/trigger-travis.sh LacledesLAN gamesvr-cssource-freeplay $TRAVIS_ACCESS_TOKEN
-
