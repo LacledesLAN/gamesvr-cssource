@@ -111,8 +111,8 @@ while true; do
         break;
     fi;
 
-    if  (( "$LLCOUNTER" >= 19 )); then
-        if [ -s "$LLTEST_LOGFILE" ] && ((( $(date +%s) - $(stat -L --format %Y "$LLTEST_LOGFILE") ) > 10 )); then
+    if  (( "$LLCOUNTER" >= 29 )); then
+        if [ -s "$LLTEST_LOGFILE" ] && ((( $(date +%s) - $(stat -L --format %Y "$LLTEST_LOGFILE") ) > 20 )); then
             echo $'succeeded.\n';
             break;
         fi;
