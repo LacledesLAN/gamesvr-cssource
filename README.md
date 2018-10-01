@@ -10,19 +10,22 @@ This repository is maintained by [Laclede's LAN](https://lacledeslan.com). Its c
 [![](https://images.microbadger.com/badges/version/lacledeslan/gamesvr-cssource.svg)](https://microbadger.com/images/lacledeslan/gamesvr-cssource "Get your own version badge on microbadger.com")
 [![](https://images.microbadger.com/badges/image/lacledeslan/gamesvr-cssource.svg)](https://microbadger.com/images/lacledeslan/gamesvr-cssource "Get your own image badge on microbadger.com")
 
-**Download**
+### Download
 ```
 docker pull lacledeslan/gamesvr-cssource
 ```
 
-**Run Interactive Server**
-```
-docker run -it --rm --net=host lacledeslan/gamesvr-source ./srcds_run -game cstrike -tickrate 100 +map de_dust2 +sv_lan 1
-```
+### Run Self Tests
 
-**Run Self Tests**
+The image includes a test script that can be used to verify its contents. No changes or pull-requests will be accepted to this repository if any tests fail.
+
 ```
 docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
+```
+
+### Run Simple, Interactive Server
+```
+docker run -it --rm --net=host lacledeslan/gamesvr-source ./srcds_run -game cstrike -tickrate 100 +map de_dust2 +sv_lan 1
 ```
 
 ## Getting Started with Game Servers in Docker
