@@ -1,12 +1,26 @@
 linux/build-cache/**
 !linux/build-cache/[Rr]eadme.md
 
-#### macOS Junk
-._*
-.apdisk
-.AppleDB
-.AppleDesktop
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+
+### Linux Cruft ###
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+
+### macOS Cruft ###
 .AppleDouble
+._*
 .com.apple.timemachine.donotpresent
 .DocumentRevisions-V100
 .DS_Store
@@ -17,11 +31,11 @@ linux/build-cache/**
 .Trashes
 .VolumeIcon.icns
 
-#### Windows Junk
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-*.msm
-*.msp
+
+### Windows Cruft ###
+*.stackdump
 *.lnk
+[Dd]esktop.ini
+ehthumbs.db
+ehthumbs_vista.db
+Thumbs.db

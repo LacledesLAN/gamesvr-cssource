@@ -1,0 +1,6 @@
+{
+    "recommendations": [
+		"editorconfig.editorconfig",
+        "peterjausovec.vscode-docker",
+    ]
+}
