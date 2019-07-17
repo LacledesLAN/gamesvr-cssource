@@ -8,7 +8,7 @@ COPY ./build-cache /output
 RUN /app/steamcmd.sh +login anonymous +force_install_dir /output +app_update 232330 validate +quit;
 
 #=======================================================================
-FROM debian:stable-slim
+FROM debian:stretch-slim
 
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
