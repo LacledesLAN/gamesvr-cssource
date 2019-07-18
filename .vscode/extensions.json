@@ -1,6 +1,6 @@
 {
     "recommendations": [
 		"editorconfig.editorconfig",
-        "peterjausovec.vscode-docker",
+        "ms-azuretools.vscode-docker",
     ]
 }
