@@ -25,7 +25,7 @@ docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
 
 ### Run Simple, Interactive Server
 ```
-docker run -it --rm --net=host lacledeslan/gamesvr-source ./srcds_run -game cstrike -tickrate 100 +map de_dust2 +sv_lan 1
+docker run -it --rm --net=host lacledeslan/gamesvr-cssource ./srcds_run -game cstrike -tickrate 100 +map de_dust2 +sv_lan 1
 ```
 
 ## Getting Started with Game Servers in Docker
