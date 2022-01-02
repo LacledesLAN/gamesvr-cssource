@@ -1,5 +1,5 @@
-linux/build-cache/**
-!linux/build-cache/[Rr]eadme.md
+build-cache/**
+!build-cache/.gitkeep
 
 ### VisualStudioCode ###
 .vscode/*

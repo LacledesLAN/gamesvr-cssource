@@ -4,11 +4,10 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build",
+            "label": "Build Linux Image",
             "type": "shell",
-            "command": "docker pull lacledeslan/steamcmd:linux; docker pull debian:stable-slim; docker build ./linux -t lltest/gamesvr-cssource --no-cache --build-arg BUILDNODE=$env:computername;",
+            "command": "docker pull lacledeslan/steamcmd:linux; docker pull debian:bullseye-slim; docker build . --rm -f linux.Dockerfile -t lltest/gamesvr-cssource --no-cache --build-arg BUILDNODE=$env:computername;",
             "group": "build",
-            "identifier": "build-image",
             "problemMatcher": [],
             "promptOnClose": true
         },
@@ -16,7 +15,7 @@
             "label": "Build & Execute Self Tests",
             "type": "shell",
             "command": "docker run -it --rm lltest/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh;",
-            "dependsOn": "build-image",
+            "dependsOn": "Build Linux Image",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -28,7 +27,7 @@
             "label": "Build & Run Interactive Server",
             "type": "shell",
             "command": "docker run -it --net=host lltest/gamesvr-cssource ./srcds_run -game cstrike +map de_dust2 -insecure -tickrate 100 -norestart +sv_lan 1 +usercon +rcon_password \"test123\";",
-            "dependsOn": "build-image",
+            "dependsOn": "Build Linux Image",
             "group": "build",
             "problemMatcher": [],
             "promptOnClose": true
@@ -37,7 +36,7 @@
             "label": "Build & Shell In",
             "type": "shell",
             "command": "docker run -it --net=host --rm lltest/gamesvr-cssource;",
-            "dependsOn": "build-image",
+            "dependsOn": "Build Linux Image",
             "group": "build",
             "problemMatcher": [],
             "promptOnClose": true

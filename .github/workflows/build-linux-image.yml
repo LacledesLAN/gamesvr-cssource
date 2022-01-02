@@ -1,0 +1,64 @@
+name: linux/amd64
+
+on:
+  schedule:
+    - cron: '0 7 * * THU'
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1.2.0
+      - name: Pull Latest Linux Base Image
+        run: docker pull debian:bullseye-slim
+      - name: Build Linux Image
+        uses: docker/build-push-action@v2.7.0
+        with:
+          context: .
+          file: ./linux.Dockerfile
+          tags: |
+            lacledeslan/gamesvr-cssource:latest
+            ghcr.io/lacledeslan/gamesvr-cssource:latest
+          build-args: |
+            BUILDNODE=GitHub (Run Number: ${{ github.run_number }} Run ID: ${{ github.run_id }})
+            SOURCE_COMMIT=${{ github.sha }}
+          no-cache: true
+      - name: Test Linux Image
+        run: docker run --rm lacledeslan/gamesvr-cssource:latest /app/ll-tests/gamesvr-cssource.sh
+      - name: Login to DockerHub
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@v1.12.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/login-action@v1.12.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+      - name: Push to Docker HUB
+        if: ${{ github.event_name != 'pull_request' }}
+        run: docker push lacledeslan/gamesvr-cssource:latest
+      - name: Push to GitHub Packages
+        if: ${{ github.event_name != 'pull_request' }}
+        run: docker push ghcr.io/lacledeslan/gamesvr-cssource:latest
+      - name: Trigger downstream build of lacledeslan/gamesvr-cssource-freeplay
+        if: ${{ github.event_name != 'pull_request' }}
+        run: |-
+          curl -XPOST -u "${{ secrets.GH_PAT_USERNAME }}:${{ secrets.GH_PAT_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" -H "Content-Type: application/json" \
+          --data '{"event_type": "${{ github.repository }} was updated", "client_payload": {"Run Number":"${{ github.run_number }}", "Run ID":"${{ github.run_id }}", "Source Commit":"${{ github.sha }}"}}' \
+          https://api.github.com/repos/LacledesLAN/gamesvr-cssource-freeplay/dispatches

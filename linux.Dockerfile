@@ -2,13 +2,13 @@
 FROM lacledeslan/steamcmd:linux as cssource-builder
 
 # Copy cached build files (if any)
-COPY ./build-cache /output
+COPY /build-cache /output
 
 # Download Counter-Strike: Source
-RUN /app/steamcmd.sh +login anonymous +force_install_dir /output +app_update 232330 validate +quit;
+RUN /app/steamcmd.sh +force_install_dir /output +login anonymous +app_update 232330 validate +quit;
 
 #=======================================================================
-FROM debian:stretch-slim
+FROM debian:bullseye-slim
 
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
@@ -17,7 +17,7 @@ HEALTHCHECK NONE
 
 RUN dpkg --add-architecture i386 &&`
     apt-get update && apt-get install -y `
-        ca-certificates lib32gcc1 lib32tinfo5 libstdc++6 libstdc++6:i386 locales locales-all tmux &&`
+        ca-certificates lib32gcc-s1 libncurses5:i386 libstdc++6 libstdc++6:i386 locales locales-all tmux &&`
     apt-get clean &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
@@ -38,7 +38,7 @@ RUN useradd --home /app --gid root --system CSSource &&`
 
 COPY --chown=CSSource:root --from=cssource-builder /output /app
 
-COPY --chown=CSSource:root ./ll-tests /app/ll-tests
+COPY --chown=CSSource:root dist/linux/ll-tests /app/ll-tests
 
 RUN chmod +x /app/ll-tests/*.sh;
 
