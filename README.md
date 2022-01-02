@@ -7,11 +7,12 @@ Counter-Strike: Source is a remake of Counter-Strike using the Source game engin
 This repository is maintained by [Laclede's LAN](https://lacledeslan.com). Its contents are intended to be bare-bones and used as a stock server. For examples of building a customized server from this Docker image browse its related child-project [gamesvr-cssource-freeplay](https://github.com/LacledesLAN/gamesvr-cssource-freeplay). If any documentation is unclear or it has any issues please see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Linux
-[![](https://images.microbadger.com/badges/version/lacledeslan/gamesvr-cssource.svg)](https://microbadger.com/images/lacledeslan/gamesvr-cssource "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/lacledeslan/gamesvr-cssource.svg)](https://microbadger.com/images/lacledeslan/gamesvr-cssource "Get your own image badge on microbadger.com")
+
+[![linux/amd64](https://github.com/LacledesLAN/gamesvr-cssource/actions/workflows/build-linux-image.yml/badge.svg?branch=master)](https://github.com/LacledesLAN/gamesvr-cssource/actions/workflows/build-linux-image.yml)
 
 ### Download
-```
+
+```shell
 docker pull lacledeslan/gamesvr-cssource
 ```
 
@@ -19,12 +20,13 @@ docker pull lacledeslan/gamesvr-cssource
 
 The image includes a test script that can be used to verify its contents. No changes or pull-requests will be accepted to this repository if any tests fail.
 
-```
+```shell
 docker run -it --rm lacledeslan/gamesvr-cssource ./ll-tests/gamesvr-cssource.sh
 ```
 
 ### Run Simple, Interactive Server
-```
+
+```shell
 docker run -it --rm --net=host lacledeslan/gamesvr-cssource ./srcds_run -game cstrike -tickrate 100 +map de_dust2 +sv_lan 1
 ```
 
