@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2.1.0
+        uses: docker/setup-qemu-action@v2.2.0
       - name: Pull Latest Linux Base Image
         run: docker pull debian:bullseye-slim
       - name: Build Linux Image
