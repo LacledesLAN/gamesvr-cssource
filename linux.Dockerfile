@@ -8,7 +8,7 @@ COPY /build-cache /output
 RUN /app/steamcmd.sh +force_install_dir /output +login anonymous +app_update 232330 validate +quit;
 
 #=======================================================================
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 ARG BUILDNODE=unspecified
 ARG SOURCE_COMMIT=unspecified
