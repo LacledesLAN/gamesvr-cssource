@@ -7,6 +7,8 @@ COPY /build-cache /output
 # Download Counter-Strike: Source
 RUN /app/steamcmd.sh +force_install_dir /output +login anonymous +app_update 232330 validate +quit;
 
+COPY ./dist/linux/ll-tests /output/ll-tests
+
 #=======================================================================
 FROM debian:bookworm-slim
 
@@ -17,7 +19,7 @@ HEALTHCHECK NONE
 
 RUN dpkg --add-architecture i386 &&`
     apt-get update && apt-get install -y `
-        ca-certificates lib32gcc-s1 libncurses5:i386 libstdc++6 libstdc++6:i386 locales locales-all tmux &&`
+        ca-certificates lib32gcc-s1 libncurses5:i386 libsdl2-2.0-0:i386 libstdc++6 libstdc++6:i386 locales locales-all tmux &&`
     apt-get clean &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
@@ -33,20 +35,17 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 
 # Set up Enviornment
 RUN useradd --home /app --gid root --system CSSource &&`
-    mkdir -p /app/ll-tests &&`
+    mkdir --parents /app &&`
     chown CSSource:root -R /app;
 
 COPY --chown=CSSource:root --from=cssource-builder /output /app
 
-COPY --chown=CSSource:root dist/linux/ll-tests /app/ll-tests
-
-RUN chmod +x /app/ll-tests/*.sh;
-
-USER CSSource
-
-RUN echo $'\n\nLinking steamclient.so to prevent srcds_run errors' &&`
+RUN chmod +x /app/ll-tests/*.sh &&`
+    echo $'\n\nLinking steamclient.so to prevent srcds_run errors' &&`
         mkdir --parents /app/.steam/sdk32 &&`
         ln -s /app/bin/steamclient.so /app/.steam/sdk32/steamclient.so
+
+USER CSSource
 
 WORKDIR /app
 
