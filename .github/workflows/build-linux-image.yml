@@ -23,7 +23,7 @@ jobs:
       - name: Pull Latest Linux Base Image
         run: docker pull debian:bullseye-slim
       - name: Build Linux Image
-        uses: docker/build-push-action@v6.5.0
+        uses: docker/build-push-action@v6.6.0
         with:
           context: .
           file: ./linux.Dockerfile
