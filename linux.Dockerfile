@@ -1,4 +1,4 @@
-FROM lacledeslan/steamcmd:linux as cssource-builder
+FROM lacledeslan/steamcmd AS cssource-builder
 
 # Copy cached build files (if any)
 COPY /build-cache /output
@@ -8,21 +8,24 @@ RUN /app/steamcmd.sh +force_install_dir /output +login anonymous +app_update 232
 
 COPY ./dist/linux/ll-tests /output/ll-tests
 
-#=======================================================================
+
+#---------------------------------
 FROM debian:bookworm-slim
 
-ARG BUILD_NODE=unspecified
-ARG GIT_REVISION=unspecified
-
-LABEL architecture="i386" \
-    com.lacledeslan.build-node="$BUILD_NODE" \
-    maintainer="Laclede's LAN <contact@lacledeslan.com>" \
-    org.opencontainers.image.description="Counter-Strike Source Dedicated Server" \
-    org.opencontainers.image.revision="$GIT_REVISION" \
-    org.opencontainers.image.source="https://github.com/LacledesLAN/gamesvr-cssource" \
-    org.opencontainers.image.vendor="Laclede's LAN"
+ARG BUILD_DATE=unspecified \
+    BUILD_NODE=unspecified \
+    GIT_REVISION=unspecified
 
 HEALTHCHECK NONE
+
+LABEL architecture="i386" \
+      com.lacledeslan.build-node="$BUILD_NODE" \
+      maintainer="Laclede's LAN <contact@lacledeslan.com>" \
+      org.opencontainers.image.created="$BUILD_DATE" \
+      org.opencontainers.image.description="Counter-Strike Source Dedicated Server" \
+      org.opencontainers.image.revision="$GIT_REVISION" \
+      org.opencontainers.image.source="https://github.com/LacledesLAN/gamesvr-cssource" \
+      org.opencontainers.image.vendor="Laclede's LAN"
 
 RUN dpkg --add-architecture i386 && \
     apt-get update && apt-get install -y \
