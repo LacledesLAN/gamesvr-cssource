@@ -1,0 +1,62 @@
+{
+    "default": true,
+    "MD003": {
+        "style": "atx"
+    },
+    "MD004": {
+        "style": "asterisk"
+    },
+    "MD009": {
+        "strict": true
+    },
+    "MD013": {
+        "code_blocks": false,
+        "tables": false,
+        "line_length": 120
+    },
+    "MD026": {
+        "punctuation": ".,;:!?"
+    },
+    "MD029": {
+        "style": "ordered"
+    },
+    "MD034": false,
+    "MD035": {
+        "style": "---"
+    },
+    "MD040": {
+        "language_only": true
+    },
+    "MD044": {
+        "code_blocks": false,
+        "html_elements": false,
+        "names": [
+            "Docker",
+            "GitHub",
+            "Laclede's",
+            "SteamCMD"
+        ]
+    },
+    "MD046": {
+        "style": "fenced"
+    },
+    "MD048": {
+        "style": "backtick"
+    },
+    "MD049": {
+        "style": "asterisk"
+    },
+    "MD050": {
+        "style": "asterisk"
+    },
+    "MD054": {
+        "collapsed": false,
+        "shortcut": false
+    },
+    "MD055": {
+        "style": "leading_and_trailing"
+    },
+    "MD060": {
+        "style": "aligned"
+    }
+}

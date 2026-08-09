@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "gamesvr",
+        "Laclede's",
+        "lacledeslan"
+    ],
+    "[markdown]": {
+        "editor.rulers": [120],
+        "editor.unicodeHighlight.ambiguousCharacters": true,
+        "editor.unicodeHighlight.invisibleCharacters": true
+    }
+}
