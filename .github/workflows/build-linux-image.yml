@@ -31,8 +31,9 @@ jobs:
             lacledeslan/gamesvr-cssource:latest
             ghcr.io/lacledeslan/gamesvr-cssource:latest
           build-args: |
-            BUILDNODE=GitHub (Run Number: ${{ github.run_number }} Run ID: ${{ github.run_id }})
-            SOURCE_COMMIT=${{ github.sha }}
+            BUILD_DATE=${{ github.event.head_commit.timestamp || github.event.pull_request.updated_at || github.event.repository.updated_at }}
+            BUILD_NODE=${{ runner.name }}
+            GIT_REVISION=${{ github.sha }}
           no-cache: true
       - name: Test Linux Image
         run: docker run --rm lacledeslan/gamesvr-cssource:latest /app/ll-tests/gamesvr-cssource.sh
